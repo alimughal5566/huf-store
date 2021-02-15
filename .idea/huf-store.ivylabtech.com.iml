@@ -112,6 +112,8 @@
       <excludeFolder url="file://$MODULE_DIR$/project/vendor/vlucas/phpdotenv" />
       <excludeFolder url="file://$MODULE_DIR$/project/vendor/webmozart/assert" />
       <excludeFolder url="file://$MODULE_DIR$/project/vendor/yajra/laravel-datatables-oracle" />
+      <excludeFolder url="file://$MODULE_DIR$/project/vendor/league/mime-type-detection" />
+      <excludeFolder url="file://$MODULE_DIR$/project/vendor/symfony/polyfill-intl-normalizer" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

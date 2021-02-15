@@ -127,7 +127,7 @@
 												<div class="col-lg-6 {{ $digital == 1 ? 'd-none' : '' }}">
 													<select class="form-control" id="shipop" name="shipping" required="">
 														<option value="shipto">{{ $langg->lang149 }}</option>
-														<option value="pickup">{{ $langg->lang150 }}</option>
+{{--														<option value="pickup">{{ $langg->lang150 }}</option>--}}
 													</select>
 												</div>
 		
@@ -161,7 +161,8 @@
 												</div>
 												<div class="col-lg-6">
 													<select class="form-control" name="customer_country" required="">
-														@include('includes.countries')
+														<option value="Pakistan">Pakistan</option>
+{{--														@include('includes.countries')--}}
 													</select>
 												</div>
 												<div class="col-lg-6">
@@ -918,7 +919,7 @@
 						</div>
 
 						@if($digital == 0)
-
+							@if($gs->multiple_shipping == 1)
 						{{-- Shipping Method Area Start --}}
 						<div class="packeging-area">
 								<h4 class="title">{{ $langg->lang765 }}</h4>
@@ -941,7 +942,8 @@
 
 						</div>
 						{{-- Shipping Method Area End --}}
-
+@endif
+							@if($gs->multiple_packaging == 1)
 						{{-- Packeging Area Start --}}
 						<div class="packeging-area">
 								<h4 class="title">{{ $langg->lang766 }}</h4>
@@ -964,7 +966,7 @@
 
 						</div>
 						{{-- Packeging Area End Start--}}
-
+@endif
 						{{-- Final Price Area Start--}}
 						<div class="final-price">
 							<span>{{ $langg->lang767 }} :</span>

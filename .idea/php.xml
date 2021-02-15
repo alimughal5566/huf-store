@@ -107,6 +107,8 @@
       <path value="$PROJECT_DIR$/project/vendor/symfony/polyfill-iconv" />
       <path value="$PROJECT_DIR$/project/vendor/symfony/event-dispatcher" />
       <path value="$PROJECT_DIR$/project/vendor/symfony/polyfill-intl-idn" />
+      <path value="$PROJECT_DIR$/project/vendor/league/mime-type-detection" />
+      <path value="$PROJECT_DIR$/project/vendor/symfony/polyfill-intl-normalizer" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7" />
