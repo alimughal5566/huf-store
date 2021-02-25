@@ -12,7 +12,7 @@
 
 	@if($ps->slider == 1)
 		<!-- Hero Area Start -->
-		<section class="hero-area">
+		<section class="hero-area mt-0">
 			<div class="container-fluid">
 				<div class="row">
 					<!-- <div class="col-lg-3 decrease-padding">
