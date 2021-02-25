@@ -132,9 +132,9 @@
 						@foreach($chunk as $img)
 							<div class="col-lg-12 remove-padding">
 								<div class="img">
-									<a class="banner-effect" href="{{ $img->link }}">
+{{--									<a class="banner-effect" href="{{ $img->link }}">--}}
 										<img src="{{asset('assets/images/banners/'.$img->photo)}}" alt="">
-									</a>
+{{--									</a>--}}
 								</div>
 							</div>
 						@endforeach
@@ -183,9 +183,9 @@
 						@foreach($chunk as $img)
 							<div class="col-lg-4 col-md-6 remove-padding">
 								<div class="left">
-									<a class="banner-effect" href="{{ $img->link }}" target="_blank">
+{{--									<a class="banner-effect" href="{{ $img->link }}" target="_blank">--}}
 										<img src="{{asset('assets/images/banners/'.$img->photo)}}" alt="">
-									</a>
+{{--									</a>--}}
 								</div>
 							</div>
 						@endforeach
