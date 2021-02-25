@@ -57,7 +57,7 @@
                             </div>
                           </div>
                           <div class="col-lg-7">
-                            <input type="text" class="input-field" name="big_save_banner_link" placeholder="{{ __('Link') }}" required="" value="{{$data->big_save_banner_link}}">
+                            <input type="text" class="input-field" name="big_save_banner_link" placeholder="{{ __('Link') }}"  value="{{$data->big_save_banner_link}}">
                           </div>
                         </div>
 

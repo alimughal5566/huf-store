@@ -32,7 +32,7 @@
                             </div>
                           </div>
                           <div class="col-lg-7">
-                            <input type="text" class="input-field" name="link" placeholder="{{ __('Link') }}" value="{{$data->link}}" required="">
+                            <input type="text" class="input-field" name="link" placeholder="{{ __('Link') }}" value="{{$data->link}}" >
                           </div>
                         </div>
 

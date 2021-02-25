@@ -230,7 +230,7 @@
                             </div>
                           </div>
                           <div class="col-lg-7">
-                            <input type="text" class="input-field" name="link" placeholder="Link" required="" value="{{$data->link}}">
+                            <input type="text" class="input-field" name="link" placeholder="Link"  value="{{$data->link}}">
 
                           </div>
                         </div>

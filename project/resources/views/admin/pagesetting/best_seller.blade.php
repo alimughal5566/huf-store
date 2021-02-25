@@ -58,7 +58,7 @@
                             </div>
                           </div>
                           <div class="col-lg-7">
-                            <input type="text" class="input-field" name="best_seller_banner_link" placeholder="{{ __('Link') }}" required="" value="{{$data->best_seller_banner_link}}">
+                            <input type="text" class="input-field" name="best_seller_banner_link" placeholder="{{ __('Link') }}"  value="{{$data->best_seller_banner_link}}">
                           </div>
                         </div>
 
