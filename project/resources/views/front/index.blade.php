@@ -49,7 +49,7 @@
 													</div>
 													<!-- layer 3 -->
 													<div class="layer-3">
-														<a href="{{$data->link}}" target="_blank" class="mybtn1"><span>{{ $langg->lang25 }} <i class="fas fa-chevron-right"></i></span></a>
+														<a href="#"  class="mybtn1"><span>{{ $langg->lang25 }} <i class="fas fa-chevron-right"></i></span></a>
 													</div>
 												</div>
 											</div>
