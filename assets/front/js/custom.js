@@ -1243,6 +1243,8 @@ window.location = mainurl+"/addtonumcart?id="+pid+"&qty="+qty+"&size="+sizes+"&c
 // Coupon Form
 
   $("#coupon-form").on('submit', function () {
+      // alert();
+      // console.log('43344444444444');
       var val = $("#code").val();
       var total = $("#grandtotal").val();
           $.ajax({
@@ -1252,21 +1254,26 @@ window.location = mainurl+"/addtonumcart?id="+pid+"&qty="+qty+"&size="+sizes+"&c
                   success:function(data){
                       if(data == 0)
                       {
-                                      toastr.error(langg.no_coupon);
-                          $("#code").val("");
+                          toastr.error(langg.no_coupon);
+                          // $("#code").val("");
                       }
                       else if(data == 2)
                       {
-                                      toastr.error(langg.already_coupon);
-                          $("#code").val("");
+                        toastr.error(langg.already_coupon);
+                          // $("#code").val("");
+                      }
+                      else if(data == 6)
+                      {
+                          toastr.error('Coupon already used');
+                          // $("#code").val("");
                       }
                       else
                       {
                           $("#coupon_form").toggle();
                           $(".main-total").html(data[0]);
                           $(".discount").html(data[4]);
-                                      toastr.success(langg.coupon_found);
-                          $("#code").val("");
+                           toastr.success(langg.coupon_found);
+                          // $("#code").val("");
                       }
                     }
             });

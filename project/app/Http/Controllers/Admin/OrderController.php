@@ -45,13 +45,31 @@ class OrderController extends Controller
                                 $id = '<a href="'.route('admin-order-invoice',$data->id).'">'.$data->order_number.'</a>';
                                 return $id;
                             })
+
                             ->editColumn('pay_amount', function (Order $data) {
                                 return $data->currency_sign . round(($data->pay_amount + $data->wallet_price) * $data->currency_value, 2);
                             })
                             ->addColumn('action', function(Order $data) {
                                 $orders = '<a href="javascript:;" data-href="'. route('admin-order-edit',$data->id) .'" class="delivery" data-toggle="modal" data-target="#modal1"><i class="fas fa-dollar-sign"></i> Delivery Status</a>';
                                 return '<div class="godropdown"><button class="go-dropdown-toggle"> Actions<i class="fas fa-chevron-down"></i></button><div class="action-list"><a href="' . route('admin-order-show',$data->id) . '" > <i class="fas fa-eye"></i> Details</a><a href="javascript:;" class="send" data-email="'. $data->customer_email .'" data-toggle="modal" data-target="#vendorform"><i class="fas fa-envelope"></i> Send</a><a href="javascript:;" data-href="'. route('admin-order-track',$data->id) .'" class="track" data-toggle="modal" data-target="#modal1"><i class="fas fa-truck"></i> Track Order</a>'.$orders.'</div></div>';
-                            }) 
+                            })
+             ->addColumn('totalQty' , function(Order $data){
+                     try{
+                         $cart = unserialize(bzdecompress(utf8_decode($data->cart)));
+                         $items = $cart->items;
+                         $qty = 0;
+                         foreach ($items as $item) {
+
+                             $qty = $qty+$item['qty'];
+                         }
+                         return $qty;
+                     }catch (\Exception $e){
+
+                         return 0;
+                     }
+
+
+             })
                             ->rawColumns(['id','action'])
                             ->toJson(); //--- Returning Json Data To Client Side
     }
@@ -265,7 +283,14 @@ class OrderController extends Controller
     {
         $order = Order::findOrFail($id);
         $cart = unserialize(bzdecompress(utf8_decode($order->cart)));
-        return view('admin.order.details',compact('order','cart'));
+        $items = $cart->items;
+        $qty = 0;
+        foreach ($items as $item) {
+
+            $qty = $qty+$item['qty'];
+        }
+
+        return view('admin.order.details',compact('order','cart','qty'));
     }
     public function invoice($id)
     {

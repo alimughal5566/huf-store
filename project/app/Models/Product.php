@@ -293,7 +293,9 @@ class Product extends Model
         {
             $curr = Currency::where('is_default','=',1)->first();
         }
+
         $price = round($price * $curr->value,2);
+
         if($gs->currency_format == 0){
             return $curr->sign.$price;
         }

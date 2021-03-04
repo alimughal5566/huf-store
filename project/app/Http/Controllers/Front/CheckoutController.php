@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Front;
 use App\Classes\GeniusMailer;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\CoupenUser;
 use App\Models\Coupon;
 use App\Models\Currency;
 use App\Models\Generalsetting;
@@ -43,8 +44,9 @@ class CheckoutController extends Controller
         return view('load.payment',compact('payment','pay_id','gateway','curr'));
     }
 
-    public function checkout()
-    {
+    public function checkout(Request $request){
+//        return Session::get('coupon_total');
+//        dd($request);
         $this->code_image();
         if (!Session::has('cart')) {
             return redirect()->route('front.cart')->with('success',"You don't have any product to checkout.");
@@ -64,8 +66,7 @@ class CheckoutController extends Controller
 
 // If a user is Authenticated then there is no problm user can go for checkout
 
-        if(Auth::guard('web')->check())
-        {
+        if(Auth::guard('web')->check()) {
                 $gateways =  PaymentGateway::where('status','=',1)->get();
                 $pickups = Pickup::all();
                 $oldCart = Session::get('cart');
@@ -103,8 +104,7 @@ class CheckoutController extends Controller
 
                 // Packaging
 
-                if($gs->multiple_packaging == 1)
-                {
+                if($gs->multiple_packaging == 1) {
                     $user = null;
                     foreach ($cart->items as $prod) {
                             $user[] = $prod['item']['user_id'];
@@ -143,19 +143,19 @@ class CheckoutController extends Controller
                 }
                 $total = $cart->totalPrice;
                 $coupon = Session::has('coupon') ? Session::get('coupon') : 0;
-                if($gs->tax != 0)
-                {
+                if($gs->tax != 0) {
                     $tax = ($total / 100) * $gs->tax;
                     $total = $total + $tax;
                 }
-                if(!Session::has('coupon_total'))
-                {
+                if(!Session::has('coupon_total')) {
                 $total = $total - $coupon;     
-                $total = $total + 0;               
+//                $total = $total + 0;
                 }
                 else {
-                $total = Session::get('coupon_total');  
-                $total = $total + round(0 * $curr->value, 2); 
+                    $total = Session::get('coupon_total');
+
+                    $total = preg_replace("/[^0-9]/", "", $total);
+//                    $total = $total + round(0 * $curr->value, 2);
                 }
         return view('front.checkout', ['products' => $cart->items, 'totalPrice' => $total, 'pickups' => $pickups, 'totalQty' => $cart->totalQty, 'gateways' => $gateways, 'shipping_cost' => 0, 'digital' => $dp, 'curr' => $curr,'shipping_data' => $shipping_data,'package_data' => $package_data, 'vendor_shipping_id' => $vendor_shipping_id, 'vendor_packing_id' => $vendor_packing_id]);             
         }
@@ -256,7 +256,7 @@ class CheckoutController extends Controller
                 }
                 else {
                 $total = Session::get('coupon_total');  
-                $total =  str_replace($curr->sign,'',$total) + round(0 * $curr->value, 2); 
+                $total =  str_replace($curr->sign,'',$total);
                 }
                 foreach ($products as $prod) {
                     if($prod['item']['type'] != 'Physical')
@@ -353,7 +353,7 @@ class CheckoutController extends Controller
                 }
                 else {
                 $total = Session::get('coupon_total');  
-                $total = $total + round(0 * $curr->value, 2); 
+//                $total = $total + round(0 * $curr->value, 2);
                 }
                 $ck = 1;
         return view('front.checkout', ['products' => $cart->items, 'totalPrice' => $total, 'pickups' => $pickups, 'totalQty' => $cart->totalQty, 'gateways' => $gateways, 'shipping_cost' => 0, 'checked' => $ck, 'digital' => $dp, 'curr' => $curr,'shipping_data' => $shipping_data,'package_data' => $package_data, 'vendor_shipping_id' => $vendor_shipping_id, 'vendor_packing_id' => $vendor_packing_id]);                 
@@ -365,6 +365,7 @@ class CheckoutController extends Controller
 
     public function cashondelivery(Request $request)
     {
+//        dd($request);
         if($request->pass_check) {
             $users = User::where('email','=',$request->personal_email)->get();
             if(count($users) == 0) {
@@ -493,18 +494,36 @@ class CheckoutController extends Controller
         $notification = new Notification;
         $notification->order_id = $order->id;
         $notification->save();
-                    if($request->coupon_id != "")
-                    {
-                       $coupon = Coupon::findOrFail($request->coupon_id);
-                       $coupon->used++;
-                       if($coupon->times != null)
-                       {
-                            $i = (int)$coupon->times;
-                            $i--;
-                            $coupon->times = (string)$i;
-                       }
-                        $coupon->update();
+//        dd($request);
+                    if($request->coupon_code != "") {
+                        if(auth()->check() ) {
+                            $user_id = auth()->user()->id;
+                            $coupenUser = new  CoupenUser;
+                            $coupenUser->coupon_id = $request->coupon_id;
+                            $coupenUser->user_id = $user_id;
+                            $coupenUser->coupon = $request->coupon_code;
+                            $coupenUser->save();
+                        }
+                        if($request->coupon_id) {
+                            $coupon = Coupon::findOrFail($request->coupon_id);
 
+                            $coupon->used++;
+                            if ($coupon->times != null) {
+                                $i = (int)$coupon->times;
+                                $i--;
+                                $coupon->times = (string)$i;
+                            }
+                            $coupon->update();
+                        }elseif($request->coupon_code != ""){
+                            $coupon = Coupon::where('code',$request->coupon_code)->first();
+                            $coupon->used++;
+                            if ($coupon->times != null) {
+                                $i = (int)$coupon->times;
+                                $i--;
+                                $coupon->times = (string)$i;
+                            }
+                            $coupon->update();
+                        }
                     }
 
         foreach($cart->items as $prod)
@@ -576,6 +595,8 @@ class CheckoutController extends Controller
             Session::forget('cart');
             Session::forget('already');
             Session::forget('coupon');
+            Session::forget('coupon_code');
+            Session::forget('coupon_id');
             Session::forget('coupon_total');
             Session::forget('coupon_total1');
             Session::forget('coupon_percentage');
@@ -651,7 +672,7 @@ class CheckoutController extends Controller
 
     public function gateway(Request $request)
     {
-
+//dd();
 $input = $request->all();
 
 $rules = [
@@ -798,7 +819,15 @@ $validator = Validator::make($input, $rules, $messages);
         
         $notification = new Notification;
         $notification->order_id = $order->id;
-        $notification->save();
+        $notification->save();$coupon = Coupon::findOrFail($request->coupon_id);
+
+        $coupon->used++;
+        if ($coupon->times != null) {
+            $i = (int)$coupon->times;
+            $i--;
+            $coupon->times = (string)$i;
+        }
+        $coupon->update();
                     if($request->coupon_id != "")
                     {
                        $coupon = Coupon::findOrFail($request->coupon_id);
@@ -885,6 +914,7 @@ $validator = Validator::make($input, $rules, $messages);
         Session::forget('coupon_total');
         Session::forget('coupon_total1');
         Session::forget('coupon_percentage');
+        Session::forget('coupon_code');
 
         if ($order->user_id != 0 && $order->wallet_price != 0) {
             $transaction = new \App\Models\Transaction;
@@ -953,8 +983,7 @@ $validator = Validator::make($input, $rules, $messages);
     }
 
 
-    public function wallet(Request $request)
-    {
+    public function wallet(Request $request){
         if($request->pass_check) {
             $users = User::where('email','=',$request->personal_email)->get();
             if(count($users) == 0) {
@@ -1078,7 +1107,6 @@ $validator = Validator::make($input, $rules, $messages);
                         $user->affilate_income += $sub;
                         $user->update();
                     }
-
                     $order['affilate_user'] = $user->id;
                     $order['affilate_charge'] = $sub;
                 }
@@ -1179,13 +1207,14 @@ $validator = Validator::make($input, $rules, $messages);
         Session::put('temporder',$order);
         Session::put('tempcart',$cart);
 
-        Session::forget('cart');
+           Session::forget('cart');
 
-            Session::forget('already');
-            Session::forget('coupon');
-            Session::forget('coupon_total');
-            Session::forget('coupon_total1');
-            Session::forget('coupon_percentage');
+//            Session::forget('already');
+//            Session::forget('coupon');
+//            Session::forget('coupon_total');
+//            Session::forget('coupon_total1');
+//            Session::forget('coupon_percentage');
+//            Session::forget('coupon_code');
 
 
             if ($order->user_id != 0 && $order->wallet_price != 0) {

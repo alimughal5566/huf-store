@@ -3,7 +3,7 @@
 @section('styles')
 
 <style type="text/css">
-	
+
 	    .root.root--in-iframe {
       background: #4682b447 !important;
     }
@@ -55,7 +55,7 @@
 								</li>
 								<li class="nav-item">
 									<a class="nav-link disabled" id="pills-step2-tab" data-toggle="pill" href="#pills-step2" role="tab" aria-controls="pills-step2" aria-selected="false" >
-										<span>2</span> {{ $langg->lang744 }} 
+										<span>2</span> {{ $langg->lang744 }}
 										<i class="fas fa-dolly"></i>
 									</a>
 								</li>
@@ -73,7 +73,7 @@
 
 			</div>
 			<div class="row">
-				
+
 
 				<div class="col-lg-8 order-last order-lg-first">
 
@@ -88,7 +88,7 @@
 						<div class="tab-content" id="pills-tabContent">
 							<div class="tab-pane fade show active" id="pills-step1" role="tabpanel" aria-labelledby="pills-step1-tab">
 								<div class="content-box">
-								
+
 									<div class="content">
 										<div class="personal-info">
 											<h5 class="title">
@@ -130,7 +130,7 @@
 {{--														<option value="pickup">{{ $langg->lang150 }}</option>--}}
 													</select>
 												</div>
-		
+
 												<div class="col-lg-6 d-none" id="shipshow">
 													<select class="form-control nice" name="pickup_location">
 														@foreach($pickups as $pickup)
@@ -138,7 +138,7 @@
 														@endforeach
 													</select>
 												</div>
-		
+
 												<div class="col-lg-6">
 													<input class="form-control" type="text" name="name"
 														placeholder="{{ $langg->lang152 }}" required=""
@@ -247,7 +247,7 @@
 												<div class="bottom-area paystack-area-btn">
 													<button type="submit"  class="mybtn1">{{ $langg->lang753 }}</button>
 												</div>
-												
+
 											</div>
 										</div>
 									</div>
@@ -256,7 +256,7 @@
 							<div class="tab-pane fade" id="pills-step2" role="tabpanel" aria-labelledby="pills-step2-tab">
 								<div class="content-box">
 									<div class="content">
-										
+
 										<div class="order-area">
 											@foreach($products as $product)
 											<div class="order-item">
@@ -443,15 +443,15 @@
 																		</div>
 																		<p>
 																				{{ $langg->paytm }}
-	
+
 																			@if($gs->paytm_text != null)
-	
+
 																			<small>
 																					{{ $gs->paytm_text }}
 																			</small>
-	
+
 																			@endif
-	
+
 																		</p>
 																</a>
 																@endif
@@ -461,17 +461,17 @@
 																					<span class="radio"></span>
 																			</div>
 																			<p>
-																					
+
 																				{{ $langg->razorpay }}
-		
+
 																				@if($gs->razorpay_text != null)
-		
+
 																				<small>
 																						{{ $gs->razorpay_text }}
 																				</small>
-		
+
 																				@endif
-		
+
 																			</p>
 																	</a>
 																	@endif
@@ -745,14 +745,14 @@
 
 															</div>
 
-														@endforeach		
-													@endif												
+														@endforeach
+													@endif
 													</div>
 														</div>
 													</div>
 												</div>
 											</div>
-											
+
 										<div class="row">
 											<div class="col-lg-12 mt-3">
 												<div class="bottom-area">
@@ -803,7 +803,7 @@
                             <input type="hidden" name="coupon_discount" id="coupon_discount" value="{{ Session::has('coupon') ? Session::get('coupon') : '' }}">
                             <input type="hidden" name="coupon_id" id="coupon_id" value="{{ Session::has('coupon') ? Session::get('coupon_id') : '' }}">
                             <input type="hidden" name="user_id" id="user_id" value="{{ Auth::guard('web')->check() ? Auth::guard('web')->user()->id : '' }}">
-							
+
 
 
 </form>
@@ -834,7 +834,7 @@
 							</p>
 							<P>
 								<b> {{$gs->tax}}% </b>
-								
+
 							</P>
 							</li>
 
@@ -853,14 +853,14 @@
 							<P>
 								@if($gs->currency_format == 0)
 									<b id="discount">{{ $curr->sign }}{{ Session::get('coupon') }}</b>
-								@else 
+								@else
 									<b id="discount">{{ Session::get('coupon') }}{{ $curr->sign }}</b>
 								@endif
 							</P>
 							</li>
 
 
-						@else 
+						@else
 
 
 							<li class="discount-bar d-none">
@@ -889,7 +889,7 @@
 						@if(Session::has('coupon_total'))
 							@if($gs->currency_format == 0)
 								<span id="total-cost">{{ $curr->sign }}{{ $totalPrice }}</span>
-							@else 
+							@else
 								<span id="total-cost">{{ $totalPrice }}{{ $curr->sign }}</span>
 							@endif
 
@@ -911,7 +911,7 @@
 							</div>
 
 						    <form id="check-coupon-form" class="coupon">
-						        <input type="text" placeholder="{{ $langg->lang133 }}" id="code" required="" autocomplete="off">
+						        <input type="text" placeholder="{{ $langg->lang133 }}"   value="{{Session::has('coupon_code') ? Session::get('coupon_code') : ''}}" id="code" required="" autocomplete="off">
 						        <button type="submit">{{ $langg->lang134 }}</button>
 						    </form>
 
@@ -925,11 +925,11 @@
 								<h4 class="title">{{ $langg->lang765 }}</h4>
 
 							@foreach($shipping_data as $data)
-						
+
 								<div class="radio-design">
-										<input type="radio" class="shipping" id="free-shepping{{ $data->id }}" name="shipping" value="{{ round($data->price * $curr->value,2) }}" {{ ($loop->first) ? 'checked' : '' }}> 
+										<input type="radio" class="shipping" id="free-shepping{{ $data->id }}" name="shipping" value="{{ round($data->price * $curr->value,2) }}" {{ ($loop->first) ? 'checked' : '' }}>
 										<span class="checkmark"></span>
-										<label for="free-shepping{{ $data->id }}"> 
+										<label for="free-shepping{{ $data->id }}">
 												{{ $data->title }}
 												@if($data->price != 0)
 												+ {{ $curr->sign }}{{ round($data->price * $curr->value,2) }}
@@ -938,7 +938,7 @@
 										</label>
 								</div>
 
-							@endforeach		
+							@endforeach
 
 						</div>
 						{{-- Shipping Method Area End --}}
@@ -948,12 +948,12 @@
 						<div class="packeging-area">
 								<h4 class="title">{{ $langg->lang766 }}</h4>
 
-							@foreach($package_data as $data)	
+							@foreach($package_data as $data)
 
 								<div class="radio-design">
-										<input type="radio" class="packing" id="free-package{{ $data->id }}" name="packeging" value="{{ round($data->price * $curr->value,2) }}" {{ ($loop->first) ? 'checked' : '' }}> 
+										<input type="radio" class="packing" id="free-package{{ $data->id }}" name="packeging" value="{{ round($data->price * $curr->value,2) }}" {{ ($loop->first) ? 'checked' : '' }}>
 										<span class="checkmark"></span>
-										<label for="free-package{{ $data->id }}"> 
+										<label for="free-package{{ $data->id }}">
 												{{ $data->title }}
 												@if($data->price != 0)
 												+ {{ $curr->sign }}{{ round($data->price * $curr->value,2) }}
@@ -962,7 +962,7 @@
 										</label>
 								</div>
 
-							@endforeach	
+							@endforeach
 
 						</div>
 						{{-- Packeging Area End Start--}}
@@ -973,7 +973,7 @@
 						@if(Session::has('coupon_total'))
 							@if($gs->currency_format == 0)
 								<span id="final-cost">{{ $curr->sign }}{{ $totalPrice }}</span>
-							@else 
+							@else
 								<span id="final-cost">{{ $totalPrice }}{{ $curr->sign }}</span>
 							@endif
 
@@ -997,7 +997,7 @@
 
 							@if($gs->currency_format == 0)
 								<span id="wallet-cost"></span>
-							@else 
+							@else
 								<span id="wallet-cost"></span>
 							@endif
 					</div>
@@ -1032,7 +1032,7 @@
 
 								<button type="submit">{{ $langg->lang818 }}</button>
 							</form>
-	
+
 						</div>
 
 
@@ -1114,7 +1114,7 @@
 					                  <ul class="social-links">
 					                    @if(App\Models\Socialsetting::find(1)->f_check == 1)
 					                    <li>
-					                      <a href="{{ route('social-provider','facebook') }}"> 
+					                      <a href="{{ route('social-provider','facebook') }}">
 					                        <i class="fab fa-facebook-f"></i>
 					                      </a>
 					                    </li>
@@ -1173,7 +1173,7 @@
                                 <i class="icofont-ui-password"></i>
                             </div>
 
-@if($gs->is_capcha == 1)
+							@if($gs->is_capcha == 1)
 
                                     <ul class="captcha-area">
                                         <li>
@@ -1186,11 +1186,11 @@
                                 <i class="icofont-refresh"></i>
                             </div>
 
-@endif
+								@endif
 
                             <input id="processdata" type="hidden"  value="{{ $langg->lang188 }}">
                             <button type="submit" class="submit-btn">{{ $langg->lang189 }}</button>
-                        
+
                         </form>
                     </div>
                 </div>
@@ -1268,14 +1268,14 @@ $('#shipop').on('change',function(){
 	if(val == 'pickup'){
 		$('#shipshow').removeClass('d-none');
 		$("#ship-diff-address").parent().addClass('d-none');
-        $('.ship-diff-addres-area').addClass('d-none');  
-        $('.ship-diff-addres-area input, .ship-diff-addres-area select').prop('required',false);  
+        $('.ship-diff-addres-area').addClass('d-none');
+        $('.ship-diff-addres-area input, .ship-diff-addres-area select').prop('required',false);
 	}
 	else{
 		$('#shipshow').addClass('d-none');
 		$("#ship-diff-address").parent().removeClass('d-none');
-        $('.ship-diff-addres-area').removeClass('d-none');  
-        $('.ship-diff-addres-area input, .ship-diff-addres-area select').prop('required',true); 
+        $('.ship-diff-addres-area').removeClass('d-none');
+        $('.ship-diff-addres-area input, .ship-diff-addres-area select').prop('required',true);
 	}
 
 });
@@ -1297,7 +1297,7 @@ ttotal = parseFloat(ttotal);
 		else{
 			$('#final-cost').html(ttotal+'{{ $curr->sign }}');
 		}
-	
+
 $('#grandtotal').val(ttotal);
 
 })
@@ -1317,11 +1317,11 @@ ttotal = parseFloat(ttotal);
 		}
 		else{
 			$('#final-cost').html(ttotal+'{{ $curr->sign }}');
-		}	
+		}
 
 
 $('#grandtotal').val(ttotal);
-		
+
 })
 
     $("#check-coupon-form").on('submit', function () {
@@ -1336,11 +1336,16 @@ $('#grandtotal').val(ttotal);
                         if(data == 0)
                         {
                         	toastr.error(langg.no_coupon);
-                            $("#code").val("");
+                            // $("#code").val("");
                         }
                         else if(data == 2)
                         {
-                        	toastr.error(langg.already_coupon);
+                        	toastr.error(langg.already_coupon +': '+'{{ Session::has('coupon_code') ? Session::get('coupon_code') : '' }}');
+                            $("#code").val('{{ Session::has('coupon_code') ? Session::get('coupon_code') : '' }}');
+                        }  else if(data == 6)
+                        {
+                            // alert();
+                        	toastr.error('Coupon already used');
                             $("#code").val("");
                         }
                         else
@@ -1364,7 +1369,7 @@ $('#grandtotal').val(ttotal);
 								$('.dpercent').html('('+data[4]+')');
 								}
 								else{
-								$('.dpercent').html('');									
+								$('.dpercent').html('');
 								}
 
 
@@ -1380,13 +1385,13 @@ ttotal = parseFloat(ttotal);
 		}
 		else{
 			$('#final-cost').html(ttotal+'{{ $curr->sign }}')
-		}	
+		}
 
                         	toastr.success(langg.coupon_found);
-                            $("#code").val("");
+                            // $("#code").val("");
                         }
                       }
-              }); 
+              });
               return false;
     });
 
@@ -1394,14 +1399,14 @@ ttotal = parseFloat(ttotal);
 
         $("#open-pass").on( "change", function() {
             if(this.checked){
-             $('.set-account-pass').removeClass('d-none');  
-             $('.set-account-pass input').prop('required',true); 
+             $('.set-account-pass').removeClass('d-none');
+             $('.set-account-pass input').prop('required',true);
              $('#personal-email').prop('required',true);
              $('#personal-name').prop('required',true);
             }
             else{
-             $('.set-account-pass').addClass('d-none');   
-             $('.set-account-pass input').prop('required',false); 
+             $('.set-account-pass').addClass('d-none');
+             $('.set-account-pass input').prop('required',false);
              $('#personal-email').prop('required',false);
              $('#personal-name').prop('required',false);
 
@@ -1415,14 +1420,14 @@ ttotal = parseFloat(ttotal);
 
 		$("#ship-diff-address").on( "change", function() {
             if(this.checked){
-             $('.ship-diff-addres-area').removeClass('d-none');  
-             $('.ship-diff-addres-area input, .ship-diff-addres-area select').prop('required',true); 
+             $('.ship-diff-addres-area').removeClass('d-none');
+             $('.ship-diff-addres-area input, .ship-diff-addres-area select').prop('required',true);
             }
             else{
-             $('.ship-diff-addres-area').addClass('d-none');  
-             $('.ship-diff-addres-area input, .ship-diff-addres-area select').prop('required',false);  
+             $('.ship-diff-addres-area').addClass('d-none');
+             $('.ship-diff-addres-area input, .ship-diff-addres-area select').prop('required',false);
             }
-            
+
         });
 
 
@@ -1489,7 +1494,7 @@ $("#wallet-form").on('submit', function (e) {
                         	toastr.success('Successfully Paid From Your Wallet.');
                         }
                       }
-              }); 
+              });
 
     });
 
@@ -1504,7 +1509,7 @@ var ck = 0;
 
 	$('.checkoutform').on('submit',function(e){
 		if(ck == 0) {
-			e.preventDefault();			
+			e.preventDefault();
 		$('#pills-step2-tab').removeClass('disabled');
 		$('#pills-step2-tab').click();
 
@@ -1615,14 +1620,14 @@ var ck = 0;
                   }
                 });
                 handler.openIframe();
-                    return false;                    
+                    return false;
                 }
                 else {
                 	$('#preloader').show();
-                    return true;   
+                    return true;
                 }
 		});
-		
+
 
 		closedFunction=function() {
         alert('window closed');
@@ -1637,7 +1642,7 @@ var ck = 0;
     	}
 
 
-		
+
         $(document).on('submit','#voguepay',function(e){
         	$('#preloader').hide();
             var val = $('#sub').val();
@@ -1674,7 +1679,7 @@ var ck = 0;
                }
                 else {
                 	$('#preloader').show();
-                    return true;   
+                    return true;
                 }
 		});
 

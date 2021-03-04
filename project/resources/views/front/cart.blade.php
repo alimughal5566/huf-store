@@ -77,16 +77,16 @@
 
                       <td class="unit-price quantity">
                         <p class="product-unit-price">
-                          {{ App\Models\Product::convertPrice($product['item_price']) }}                        
+                          {{ App\Models\Product::convertPrice($product['item_price']) }}
                         </p>
           @if($product['item']['type'] == 'Physical')
 
                           <div class="qty">
                               <ul>
-              <input type="hidden" class="prodid" value="{{$product['item']['id']}}">  
-              <input type="hidden" class="itemid" value="{{$product['item']['id'].$product['size'].$product['color'].str_replace(str_split(' ,'),'',$product['values'])}}">     
-              <input type="hidden" class="size_qty" value="{{$product['size_qty']}}">     
-              <input type="hidden" class="size_price" value="{{$product['size_price']}}">   
+              <input type="hidden" class="prodid" value="{{$product['item']['id']}}">
+              <input type="hidden" class="itemid" value="{{$product['item']['id'].$product['size'].$product['color'].str_replace(str_split(' ,'),'',$product['values'])}}">
+              <input type="hidden" class="size_qty" value="{{$product['size_qty']}}">
+              <input type="hidden" class="size_price" value="{{$product['size_price']}}">
                                 <li>
                                   <span class="qtminus1 reducing">
                                     <i class="icofont-minus"></i>
@@ -109,7 +109,7 @@
 
                             @if($product['size_qty'])
                             <input type="hidden" id="stock{{$product['item']['id'].$product['size'].$product['color'].str_replace(str_split(' ,'),'',$product['values'])}}" value="{{$product['size_qty']}}">
-                            @elseif($product['item']['type'] != 'Physical') 
+                            @elseif($product['item']['type'] != 'Physical')
                             <input type="hidden" id="stock{{$product['item']['id'].$product['size'].$product['color'].str_replace(str_split(' ,'),'',$product['values'])}}" value="1">
                             @else
                             <input type="hidden" id="stock{{$product['item']['id'].$product['size'].$product['color'].str_replace(str_split(' ,'),'',$product['values'])}}" value="{{$product['stock']}}">
@@ -117,7 +117,7 @@
 
                       <td class="total-price">
                         <p id="prc{{$product['item']['id'].$product['size'].$product['color'].str_replace(str_split(' ,'),'',$product['values'])}}">
-                          {{ App\Models\Product::convertPrice($product['price']) }}                 
+                          {{ App\Models\Product::convertPrice($product['price']) }}
                         </p>
                       </td>
                       <td>
@@ -142,6 +142,7 @@
                   {{ $langg->lang128 }}
                 </p>
                 <P>
+{{--                    @php dd($totalPrice) @endphp--}}
                   <b class="cart-total">{{ Session::has('cart') ? App\Models\Product::convertPrice($totalPrice) : '0.00' }}</b>
                 </P>
               </li>
@@ -150,7 +151,8 @@
                   {{ $langg->lang129 }}
                 </p>
                 <P>
-                  <b class="discount">{{ App\Models\Product::convertPrice(0)}}</b>
+{{--                  <b class="discount">{{ App\Models\Product::convertPrice(0)}}</b>--}}
+                  <b class="discount">{{ Session::has('coupon_percentage') ? Session::get('coupon_percentage') : '0%' }}</b>
                   <input type="hidden" id="d-val" value="{{ App\Models\Product::convertPrice(0)}}">
                 </P>
               </li>
@@ -168,6 +170,7 @@
                   {{ $langg->lang131 }}
               </p>
               <p>
+
                   <span class="main-total">{{ Session::has('cart') ? App\Models\Product::convertPrice($mainTotal) : '0.00' }}</span>
               </p>
             </div>
@@ -176,7 +179,7 @@
                   {{ $langg->lang132 }}
               </div>
               <form id="coupon-form" class="coupon">
-                <input type="text" placeholder="{{ $langg->lang133 }}" id="code" required="" autocomplete="off">
+                <input type="text" placeholder="{{ $langg->lang133 }}"  value="{{Session::has('coupon_code') ? Session::get('coupon_code') : ''}}" id="code" required="" autocomplete="off">
                 <input type="hidden" class="coupon-total" id="grandtotal" value="{{ Session::has('cart') ? App\Models\Product::convertPrice($mainTotal) : '0.00' }}">
                 <button type="submit">{{ $langg->lang134 }}</button>
               </form>
@@ -192,4 +195,4 @@
   </div>
 </section>
 <!-- Cart Area End -->
-@endsection 
+@endsection

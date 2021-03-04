@@ -55,7 +55,7 @@
                                                 <tr>
                                                     <th width="45%">{{ __('Total Product') }}</th>
                                                     <td width="10%">:</td>
-                                                    <td width="45%">{{$order->totalQty}}</td>
+                                                    <td width="45%">{{$qty}}</td>
                                                 </tr>
                                                 @if($order->shipping_title != null)
                                                     <tr>
