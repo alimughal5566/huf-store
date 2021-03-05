@@ -150,11 +150,11 @@
 																	{{ucwords($order->status)}}
 															</div>
 														</td>
-														<td><span class="text-primary">
+														<td>
 															<a class="mybtn1 sm sm1" href="{{route('user-order',$order->id)}}">
-																	{{ $langg->lang283 }}
+                                                                <span class="text-primary">{{ $langg->lang283 }}</span>
 															</a>
-                                                            </span>
+
 														</td>
 													</tr>
 													@endforeach
