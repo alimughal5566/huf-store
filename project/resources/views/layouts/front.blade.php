@@ -214,8 +214,6 @@
 											</div>
 										</li>
 									@endif
-
-
                         			@if($gs->reg_vendor == 1)
 										<li>
                         				@if(Auth::check())
@@ -231,8 +229,6 @@
 										</li>
 										@endif
 									@endif
-
-
 								</ul>
 							</div>
 						</div>
@@ -257,11 +253,11 @@
 				<div class="col-lg-7 col-sm-12 order-last order-sm-2 order-md-2">
 					<div class="search-box-wrapper">
 						<div class="search-box">
-							<div class="categori-container" id="catSelectForm">
-								<select name="category" id="category_select" class="categoris">
-									<option value="">{{ $langg->lang1 }}</option>
+							<div class="categori-container categori_toggle" id="catSelectForm" >
+								<select name="category" id="category_select" class="categoris categori_toggle" >
+									<option class="text-light ">{{ $langg->lang1 }}</option>
 									@foreach($categories as $data)
-									<option value="{{ $data->slug }}" {{ Request::route('category') == $data->slug ? 'selected' : '' }}>{{ $data->name }}</option>
+									<option   class="text-light" value="{{ $data->slug }}" {{ Request::route('category') == $data->slug ? 'selected' : '' }}>{{ $data->name }}</option>
 									@endforeach
 								</select>
 							</div>
@@ -498,7 +494,7 @@
 
                                       @if(App\Models\Socialsetting::find(1)->d_status == 1)
                                       <li>
-                                        <a href="#" class="dribbble" target="_blank">
+                                        <a href="https://wa.me/+923099800734" class="dribbble" target="_blank">
                                             <i class="fab fa-whatsapp"></i>
                                         </a>
                                       </li>
@@ -1084,6 +1080,7 @@
   var mainurl = "{{url('/')}}";
   var gs      = {!! json_encode(DB::table('generalsettings')->where('id','=',1)->first(['is_loader'])) !!};
   var langg    = {!! json_encode($langg) !!};
+
 </script>
 
 	<!-- jquery -->

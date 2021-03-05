@@ -74,7 +74,7 @@
                 <h3 class="title w-title">{{ $langg->lang834 }}</h3>
                 <h3 class="title w-price mb-3">{{ App\Models\Product::vendorConvertPrice(Auth::user()->balance) }}</h3>
                 <a href="{{ route('user-deposit-create') }}" class="mybtn1 sm">
-                  <i class="fas fa-plus"></i> {{ $langg->lang835 }}
+                    <span class="text-primary"><i class="fas fa-plus "></i> {{ $langg->lang835 }} </span>
                 </a>
               </div>
             </div>
@@ -150,10 +150,11 @@
 																	{{ucwords($order->status)}}
 															</div>
 														</td>
-														<td>
+														<td><span class="text-primary">
 															<a class="mybtn1 sm sm1" href="{{route('user-order',$order->id)}}">
 																	{{ $langg->lang283 }}
 															</a>
+                                                            </span>
 														</td>
 													</tr>
 													@endforeach
